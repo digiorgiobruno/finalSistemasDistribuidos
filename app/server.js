@@ -14,4 +14,4 @@ app.listen(port, () => {
   sequelize.authenticate().then(() => {
     console.log('Nos hemos conectado a la base de datos');
 })
-})
+}) 

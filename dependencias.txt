@@ -1,0 +1,31 @@
+npm i express sequelize mysql2 dotenv
+
+npm i nodemon sequelize-cli
+
+//una vez que configuramos los directorios de .sequelizerc y el archivo database dentro de config
+npx sequelize-cli db:migrate
+npx sequelize-cli model:generate --name user --attributes name:string,password:string,email:string
+//bcrypt para encriptar el password y jsonwebtoken
+npm i bcrypt 
+npm i jsonwebtoken
+// creamos otro modelo
+npx sequelize-cli model:generate --name Post --attributes title:string,body:text 
+
+//seed
+npx sequelize-cli seed:generate --name create-some-posts-and-users
+
+npx sequelize-cli db:seed:all //cargar una seed
+//creamos un nuevo modelo para roles talque un usuario puede tener muchos roles
+
+npx sequelize-cli model:generate --name Role --attributes role:string,userId:integer 
+
+npx sequelize-cli migration:generate --name create-user-role 
+
+//creamos seeds para reinar de datos las tablas
+npx sequelize-cli seed:generate --name create-some-roles
+npx sequelize-cli db:seed:all
+
+//explicación 
+Hasta ahora tenemos una aplicacion que permite 
+-crear usuarios(signup): para la creació de usuario se introduce: name,email y password. Una vez creada la cuenta te arroja un token. (expiracion 24h )
+-logearte(signin): aqui introducimos email y password, la app nos trae los datos del user y un token

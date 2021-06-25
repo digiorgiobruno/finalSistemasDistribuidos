@@ -11,10 +11,18 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      User.hasMany(models.Post,{as:"posts", foreignKey:"userId"});
-      User.belongsToMany(models.Role, { as: "roles", through: "user_role", foreignKey: "user_id" });
+      User.hasMany(models.Post, {
+        as: "posts",
+        foreignKey: "userId"
+      });
+      User.belongsToMany(models.Role, {
+        as: "roles",
+        through: "user_role",
+        foreignKey: "user_id"
+      });
     }
   };
+
   User.init({
     name: {
       type: DataTypes.STRING,
@@ -44,7 +52,7 @@ module.exports = (sequelize, DataTypes) => {
     email: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique:true,
+      unique: true,
       validate: {
         isEmail: {
           msg: "Formato de correo no valido"
@@ -59,7 +67,16 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'User',
-    tableName:'users'
+    tableName: 'users'
   });
+
+  // Comprueba que el usuario es administrador
+  User.isAdmin = function (roles) {
+    let tmpArray = [];
+    roles.forEach(role => tmpArray.push(role.role));//obtenemos un arrayTemporal con todos los roles
+    console.log(tmpArray);
+    return tmpArray.includes('admin');//si este array incluye 'admin' devuelve true sino falso
+  }
+
   return User;
 };

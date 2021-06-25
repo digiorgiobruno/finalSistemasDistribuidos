@@ -1,3 +1,4 @@
+//instalar dependencias
 npm i express sequelize mysql2 dotenv
 
 npm i nodemon sequelize-cli
@@ -11,7 +12,7 @@ npm i jsonwebtoken
 // creamos otro modelo
 npx sequelize-cli model:generate --name Post --attributes title:string,body:text 
 
-//seed
+//seed para setear algunos usuarios
 npx sequelize-cli seed:generate --name create-some-posts-and-users
 
 npx sequelize-cli db:seed:all //cargar una seed
@@ -29,3 +30,34 @@ npx sequelize-cli db:seed:all
 Hasta ahora tenemos una aplicacion que permite 
 -crear usuarios(signup): para la creació de usuario se introduce: name,email y password. Una vez creada la cuenta te arroja un token. (expiracion 24h )
 -logearte(signin): aqui introducimos email y password, la app nos trae los datos del user y un token
+
+
+Videos e información de referencia:
+
+Jwt
+Sitio oficial:https://jwt.io/
+https://es.wikipedia.org/wiki/JSON_Web_Token
+
+
+VIDEOS A ESTUDIAR
+
+#1 Autorización con JWT + Sequelize ORM | Configuración inicial proyecto
+https://www.youtube.com/watch?v=E-O2504WiwQ
+
+#2 Autorización con JWT + Sequelize ORM | Registro & Login
+
+https://www.youtube.com/watch?v=VuYLMnaH1Hc
+
+#3 Autorización con JWT + Sequelize ORM | Auth Middleware
+https://www.youtube.com/watch?v=yW52N-z4PwE
+
+#4 Autorización con JWT + Sequelize ORM | Roles (ManyToMany) y Post CRUD
+
+https://www.youtube.com/watch?v=a-6ja9-y580
+
+#5 Autorización con JWT + Sequelize ORM | Aplicando políticas
+
+https://www.youtube.com/watch?v=mNreRVh5UvU
+
+
+enviar a: cortezalberto@gmail.com 

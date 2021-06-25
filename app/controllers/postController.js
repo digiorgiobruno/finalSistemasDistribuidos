@@ -1,60 +1,47 @@
-const {
-    Post
-} = require('../models/index');
+const { Post } = require('../models/index');
+
 module.exports = {
 
-    async index(req, res) {
-        let posts = await Post.findAll();
-        res.json(posts);
-    },
-    //Show 
-
-    // Show
-    async show(req, res) {
+    //middleware
+    async find(req, res, next) {
         let post = await Post.findByPk(req.params.id);
 
         if (!post) {
-            res.status(404).json({
-                msg: "El post no encontrado"
-            });
+            res.status(404).json({ msg: "El post no encontrado" });
         } else {
-            res.json(post);
+            req.post = post;
+            next();
         }
+    },
+
+    async index(req, res) {
+        let posts = await Post.findAll();
+
+        res.json(posts);
+    },
+
+    // Show
+    async show(req, res) {
+        res.json(req.post);
     },
 
     // Update
     async update(req, res) {
-        let post = await Post.findByPk(req.params.id);
 
-        if (!post) {
-            res.status(404).json({
-                msg: "El post no encontrado"
-            });
-        } else {
+        req.post.title = req.body.title;
+        req.post.body = req.body.body;
 
-            post.title = req.body.title;
-            post.body = req.body.body;
+        req.post.save().then(post => {
+            res.json(post);
+        })
 
-            post.save().then(post => {
-                res.json(post);
-            })
-        }
     },
 
     // Delete
     async delete(req, res) {
-        let post = await Post.findByPk(req.params.id);
-
-        if (!post) {
-            res.status(404).json({
-                msg: "El post no encontrado"
-            });
-        } else {
-            post.destroy().then(post => {
-                res.json({
-                    msg: "El post ha sido eliminado "
-                });
-            })
-        }
+        req.post.destroy().then(post => {
+            res.json({ msg: "El post ha sido eliminado " }); 
+        })
     },
+
 }
